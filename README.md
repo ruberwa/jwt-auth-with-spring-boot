@@ -107,3 +107,96 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 - Replace `your_database_name`, `your_username`, and `your_password` in the configuration section with your actual details.
 - Feel free to adjust the API endpoints and any example requests based on your implementation.
 
+
+# AM USING UBUNTU - How to Create a MySQL Database on Ubuntu
+
+This guide provides step-by-step instructions for creating a MySQL database and user on Ubuntu.
+
+## Step 1: Install MySQL (if not already installed)
+
+If you haven't installed MySQL yet, you can do so by running:
+
+```bash
+sudo apt update
+sudo apt install mysql-server
+```
+
+## Step 2: Start MySQL Service
+
+Ensure that the MySQL service is running:
+
+```bash
+sudo service mysql start
+```
+
+## Step 3: Log in to MySQL
+
+Log in to the MySQL shell with the root user:
+
+```bash
+sudo mysql -u root -p
+```
+
+You will be prompted to enter the root password you set during MySQL installation.
+
+## Step 4: Create the Database
+
+Once you are in the MySQL shell, you can create your database with the following commands:
+
+1. **Create the database**:
+
+   ```sql
+   CREATE DATABASE jwt_spring_auth_db;
+   ```
+
+2. **Create the user** (replace `your_username` and `your_password` with your desired username and password):
+
+   ```sql
+   CREATE USER 'jwt_spring_auth_user'@'localhost' IDENTIFIED BY 'jwt_spring_auth_pass';
+   ```
+
+3. **Grant permissions to the user**:
+
+   ```sql
+   GRANT ALL PRIVILEGES ON jwt_spring_auth_db.* TO 'jwt_spring_auth_user'@'localhost';
+   ```
+
+4. **Flush the privileges** to ensure that the changes take effect:
+
+   ```sql
+   FLUSH PRIVILEGES;
+   ```
+
+5. **Exit the MySQL shell**:
+
+   ```sql
+   EXIT;
+   ```
+
+## Summary of Commands
+
+Here's a summary of the commands you will run in the MySQL shell:
+
+```sql
+CREATE DATABASE jwt_spring_auth_db;
+CREATE USER 'jwt_spring_auth_user'@'localhost' IDENTIFIED BY 'Jwt_Spring_Auth_2024';
+GRANT ALL PRIVILEGES ON jwt_spring_auth_db.* TO 'jwt_spring_auth_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+## Step 5: Update Your Application Properties
+
+Now that you've created the database and user, update your `application.properties` file with the new credentials:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/jwt_spring_auth_db
+spring.datasource.username=jwt_spring_auth_user
+spring.datasource.password=Jwt_Spring_Auth_2024
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+## Final Step
+
+After updating the properties, you can build and run your Spring Boot application, and it should connect to the MySQL database you just created.
